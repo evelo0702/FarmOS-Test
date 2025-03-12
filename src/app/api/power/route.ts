@@ -26,7 +26,7 @@ export async function GET(req: Request) {
     const sql =
       type === "month"
         ? `SELECT obsday AS date, dgname, CASE WHEN dgname = 'fuel' THEN ROUND(nvalue, 2) ELSE nvalue END AS nvalue FROM engday WHERE obsday BETWEEN ? AND ?`
-        : `SELECT obsmonth AS date, dgname, nvalue FROM iftech.engmonth WHERE obsmonth BETWEEN ? AND ? GROUP BY obsmonth, dgname ORDER BY obsmonth, dgname`;
+        : `SELECT obsmonth AS date, dgname, CASE WHEN dgname = 'fuel' THEN ROUND(nvalue, 2) ELSE nvalue END AS nvalue FROM iftech.engmonth WHERE obsmonth BETWEEN ? AND ? ORDER BY obsmonth, dgname`;
     const data = await query(sql, [start, end]);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
