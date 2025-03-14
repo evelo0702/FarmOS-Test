@@ -56,32 +56,48 @@ export default function PowerChart({ data }: { data: PowerConsumption[] }) {
         >
           <h2 className="text-lg font-semibold text-center mb-2">{title}</h2>
           <ResponsiveContainer width="100%" height={250}>
-            <ComposedChart data={formattedData} margin={{ left: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis
-                domain={["auto", "auto"]}
-                tickFormatter={(value) => value.toString()}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "1px solid #ddd",
-                }}
-              />
-              <Legend />
-              {keys.map(({ key, label, color }) => (
-                <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  stroke={color}
-                  dot={{ fill: color }}
-                  name={label}
+            {formattedData.length > 0 ? (
+              <ComposedChart data={formattedData} margin={{ left: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis
+                  domain={["auto", "auto"]}
+                  tickFormatter={(value) => value.toString()}
                 />
-              ))}
-            </ComposedChart>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "white",
+                    color: "black",
+                    border: "1px solid #ddd",
+                  }}
+                />
+                <Legend />
+                {keys.map(({ key, label, color }) => (
+                  <Line
+                    key={key}
+                    type="monotone"
+                    dataKey={key}
+                    stroke={color}
+                    dot={{ fill: color }}
+                    name={label}
+                  />
+                ))}
+              </ComposedChart>
+            ) : (
+              // 빈 데이터일 경우 메시지 표시
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%",
+                  color: "#999",
+                  fontSize: "14px",
+                }}
+              >
+                데이터가 없습니다.
+              </div>
+            )}
           </ResponsiveContainer>
         </div>
       ))}
