@@ -15,15 +15,15 @@ import {
 // 차트 그룹 설정
 const chartGroups = [
   {
-    title: "연료 전력 사용량",
+    title: "연료 사용량",
     keys: [{ key: "fuel", label: "Fuel", color: "#220ea1" }],
   },
   {
-    title: "난방 전력 사용량",
+    title: "난방 사용량",
     keys: [{ key: "heater", label: "Heater", color: "#691212" }],
   },
   {
-    title: "일반 & 네트워크 & 저장소 전력 사용량",
+    title: "일반 & 네트워크 & 저장소 사용량",
     keys: [
       { key: "general", label: "General", color: "#8884d8" },
       { key: "nutsys", label: "Nutsys", color: "#ffc658" },
