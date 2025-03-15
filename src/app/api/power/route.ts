@@ -21,8 +21,6 @@ export async function GET(req: Request) {
     end = end + "-12";
   }
   try {
-    console.log(`API 요청: type=${type}, start=${start}, end=${end}`);
-
     const sql =
       type === "month"
         ? `SELECT obsday AS date, dgname, CASE WHEN dgname = 'fuel' THEN ROUND(nvalue, 2) ELSE nvalue END AS nvalue FROM engday WHERE obsday BETWEEN ? AND ?`
@@ -30,9 +28,9 @@ export async function GET(req: Request) {
     const data = await query(sql, [start, end]);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error("데이터베이스 오류:", error);
+    console.error("Error fetching power data:", error);
     return NextResponse.json(
-      { error: "데이터베이스 오류", details: String(error) },
+      { error: "Failed to fetch power data" },
       { status: 500 }
     );
   }
