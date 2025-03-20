@@ -34,7 +34,6 @@ const chartGroups = [
 ];
 
 export default function PowerChart({ data }: { data: PowerConsumption[] }) {
-  console.log(data);
   const formattedData = useMemo(() => {
     if (!data || data.length === 0) return [];
 
@@ -46,6 +45,8 @@ export default function PowerChart({ data }: { data: PowerConsumption[] }) {
       }, {} as Record<string, GroupedPowerData>)
     );
   }, [data]);
+
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
       {chartGroups.map(({ title, keys, fullWidth }) => (
