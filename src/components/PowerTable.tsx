@@ -1,17 +1,20 @@
 "use client";
 
+import { useMemo } from "react";
 import { GroupedPowerData, PowerConsumption } from "../types/power";
 
 export default function PowerTable({ data }: { data: PowerConsumption[] }) {
-  const groupedData: Record<string, GroupedPowerData> = data.reduce(
-    (acc, { date, dgname, nvalue }) => {
-      if (!acc[date]) acc[date] = { date };
-      acc[date][dgname] = nvalue;
-      return acc;
-    },
-    {} as Record<string, GroupedPowerData>
-  );
-  const tableData: GroupedPowerData[] = Object.values(groupedData);
+  const formattedData = useMemo(() => {
+      if (!data || data.length === 0) return [];
+  
+      return Object.values(
+        data.reduce((acc, { date, dgname, nvalue }) => {
+          if (!acc[date]) acc[date] = { date };
+          acc[date][dgname] = nvalue ?? 0;
+          return acc;
+        }, {} as Record<string, GroupedPowerData>)
+      );
+    }, [data]);
   return (
     <div className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 shadow-lg rounded-xl p-6">
       <h2 className="text-lg font-semibold mb-4">전력 사용량 테이블</h2>
@@ -41,8 +44,8 @@ export default function PowerTable({ data }: { data: PowerConsumption[] }) {
             </tr>
           </thead>
           <tbody>
-            {tableData.length > 0 ? (
-              tableData.map((row, index) => (
+            {formattedData.length > 0 ? (
+              formattedData.map((row, index) => (
                 <tr
                   key={index}
                   className="border border-neutral-300 dark:border-neutral-700 odd:bg-white even:bg-neutral-100 dark:odd:bg-black dark:even:bg-neutral-900"
