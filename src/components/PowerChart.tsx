@@ -34,6 +34,7 @@ const chartGroups = [
 ];
 
 export default function PowerChart({ data }: { data: PowerConsumption[] }) {
+  console.log(data);
   const formattedData = useMemo(() => {
     if (!data || data.length === 0) return [];
 
@@ -85,16 +86,7 @@ export default function PowerChart({ data }: { data: PowerConsumption[] }) {
               </ComposedChart>
             ) : (
               // 빈 데이터일 경우 메시지 표시
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "100%",
-                  color: "#999",
-                  fontSize: "14px",
-                }}
-              >
+              <div className="flex items-center justify-center h-full text-gray-500 text-sm">
                 데이터가 없습니다.
               </div>
             )}
